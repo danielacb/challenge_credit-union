@@ -102,11 +102,17 @@ export const theme = createTheme({
 
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           fontWeight: "700",
           borderRadius: "8px",
           boxShadow: "none",
-        },
+
+          "&.Mui-disabled": {
+            backgroundColor: theme.palette.lorem.primary,
+            color: theme.palette.lorem.gray["100"],
+            opacity: 0.5,
+          },
+        }),
         sizeLarge: {
           height: "57px",
         },
@@ -172,6 +178,15 @@ export const theme = createTheme({
         root: ({ theme }) => ({
           borderColor: theme.palette.lorem.gray["300"],
         }),
+      },
+    },
+
+    MuiAlert: {
+      styleOverrides: {
+        message: {
+          fontSize: "0.875rem",
+          lineHeight: "1.2rem",
+        },
       },
     },
   },

@@ -1,71 +1,100 @@
 import {
+  Alert,
+  Box,
   Button,
+  CircularProgress,
   Divider,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
   Typography,
 } from "@mui/material";
-import { NumericFormat } from "react-number-format";
 
-import { loanPurposeOptions, loanTermOptions } from "./options";
 import { Form, FormFooter, Wrapper } from "./styles";
 import InfoItem from "../../components/InfoItem";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoanRequestForm from "./LoanRequestForm";
+import { useEffect, useState } from "react";
+import { RequestOfferResponse, requestOffer } from "../../api";
+import { formatAmount, formatPercentage } from "../../utils";
+
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const schema = z.object({
+  loanPurpose: z
+    .enum(["Debt Consolidation", "Personal", ""])
+    .refine((value) => value !== "", {
+      message: "Please select a Loan Purpose",
+    }),
+  amount: z.number({ message: "Total Loan Amount is required" }),
+  loanTerm: z
+    .number({ message: "Please select a Loan term" })
+    .refine((value) => [12, 24, 36, 48].includes(value), {
+      message: "Please select a valid loan term",
+    }),
+});
+
+export type FormData = z.infer<typeof schema>;
 
 export default function LoanRequest() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setAPIError] = useState("");
+  const [offer, setOffer] = useState<RequestOfferResponse>();
+
+  const {
+    formState: { errors, isValid },
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    watch,
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const formValues = watch();
+  const { loanPurpose, amount, loanTerm } = formValues;
+
+  useEffect(() => {
+    async function fetchOffers() {
+      setIsLoading(true);
+
+      try {
+        const offer = await requestOffer({
+          loanPurpose,
+          amount,
+          terms: loanTerm,
+        });
+
+        setOffer(offer);
+      } catch (error) {
+        setAPIError("Unable to retrieve offers. Please try again shortly!");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (isValid) fetchOffers();
+  }, [isValid, loanPurpose, amount, loanTerm]);
+
+  function onSubmit() {
+    console.log(offer);
+  }
+
   return (
     <Wrapper>
       <Typography variant="h1" marginBottom={6}>
         Loan Information
       </Typography>
 
-      <Form>
-        <FormControl fullWidth>
-          <InputLabel id="loan-purpose">Loan Purpose</InputLabel>
-          <Select labelId="loan-purpose" id="loan-purpose" label="Loan Purpose">
-            <MenuItem disabled value="">
-              Select an option
-            </MenuItem>
-            {loanPurposeOptions.map((purpose) => (
-              <MenuItem key={purpose} value={purpose}>
-                {purpose}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <NumericFormat
-          customInput={TextField}
-          fullWidth
-          id="outlined-basic"
-          label="Total Loan Amount"
-          variant="outlined"
-          thousandSeparator=","
-          decimalSeparator="."
-          prefix="$"
-          decimalScale={2}
-          fixedDecimalScale
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <LoanRequestForm
+          errors={errors}
+          register={register}
+          getValues={getValues}
+          setValue={setValue}
         />
-
-        <FormControl fullWidth>
-          <InputLabel id="loan-terms">{`Loan term (months)`}</InputLabel>
-          <Select
-            labelId="loan-terms"
-            id="loan-terms"
-            label="Loan term (months)"
-          >
-            <MenuItem disabled value="">
-              Select an option
-            </MenuItem>
-            {loanTermOptions.map(({ value, label }) => (
-              <MenuItem key={value} value={value}>
-                {label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
 
         <Typography variant="body2" sx={{ marginBottom: 2.5 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sagittis
@@ -76,12 +105,34 @@ export default function LoanRequest() {
           auam. lobortis blandit iosum varius at.
         </Typography>
 
-        <InfoItem title="Monthly payment" value="$85" sx={{ marginTop: 2.5 }} />
-        <Divider sx={{ marginY: 1 }} />
-        <InfoItem title="APR" value="2.49%" />
+        {apiError ? (
+          <Alert severity="error" sx={{ my: 4 }}>
+            {apiError}
+          </Alert>
+        ) : isLoading ? (
+          <Box sx={{ width: "100%", textAlign: "center", my: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : offer ? (
+          <>
+            <InfoItem
+              title="Monthly payment"
+              value={formatAmount(offer.monthlyPayments)}
+              sx={{ marginTop: 2.5 }}
+            />
+            <Divider sx={{ marginY: 1 }} />
+            <InfoItem title="APR" value={formatPercentage(offer.apr)} />
+          </>
+        ) : null}
 
         <FormFooter>
-          <Button fullWidth type="submit" variant="contained" size="large">
+          <Button
+            fullWidth
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={!offer || isLoading}
+          >
             Submit application
           </Button>
         </FormFooter>
