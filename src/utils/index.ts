@@ -6,8 +6,9 @@ export function formatPercentage(number: number) {
 }
 
 export function formatAmount(amount: number) {
-  const formattedAmount = amount.toFixed(2);
-  return formattedAmount.endsWith(".00")
-    ? `$${parseInt(formattedAmount)}`
-    : `$${formattedAmount}`;
+  return new Intl.NumberFormat("en-US").format(amount);
+}
+
+export function toTitleCase(str: string) {
+  return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }

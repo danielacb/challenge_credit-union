@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Alert,
   Box,
@@ -6,15 +7,19 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { Form, FormFooter, Wrapper } from "./styles";
 import InfoItem from "../../components/InfoItem";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import LoanRequestForm from "./LoanRequestForm";
-import { useEffect, useState } from "react";
-import { RequestOfferResponse, requestOffer } from "../../api";
+import {
+  RequestOfferResponse,
+  requestOffer,
+  submitApplication,
+} from "../../api";
 import { formatAmount, formatPercentage } from "../../utils";
 
 const myHeaders = new Headers();
@@ -40,6 +45,8 @@ export default function LoanRequest() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setAPIError] = useState("");
   const [offer, setOffer] = useState<RequestOfferResponse>();
+
+  const navigate = useNavigate();
 
   const {
     formState: { errors, isValid },
@@ -78,8 +85,26 @@ export default function LoanRequest() {
     if (isValid) fetchOffers();
   }, [isValid, loanPurpose, amount, loanTerm]);
 
-  function onSubmit() {
-    console.log(offer);
+  async function onSubmit() {
+    setIsLoading(true);
+
+    try {
+      if (!offer?.id) throw new Error("Offer not found");
+
+      const { userId } = await submitApplication({
+        offerId: offer.id,
+        loanPurpose,
+        terms: loanTerm,
+        amount,
+      });
+
+      navigate("/confirmation", { state: { userId } });
+    } catch (error) {
+      setAPIError("Unable to submit application. Please try again shortly!");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -117,7 +142,7 @@ export default function LoanRequest() {
           <>
             <InfoItem
               title="Monthly payment"
-              value={formatAmount(offer.monthlyPayments)}
+              value={`$${formatAmount(offer.monthlyPayments)}`}
               sx={{ marginTop: 2.5 }}
             />
             <Divider sx={{ marginY: 1 }} />

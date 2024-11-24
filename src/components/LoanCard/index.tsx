@@ -11,27 +11,45 @@ import {
 } from "@mui/material";
 
 import { ImageContainer } from "./styles";
-import CardImage from "/card-image.jpeg";
 import MoreVert from "../Icons/MoreVert";
 import InfoItem from "../InfoItem";
+import { LoanProps } from "../../api";
+import { formatAmount, toTitleCase } from "../../utils";
 
-export default function LoanCard() {
+export default function LoanCard({ loan }: { loan: LoanProps }) {
+  const {
+    automobile,
+    apr,
+    monthlyPayments,
+    remainingMonths,
+    originalAmount,
+    lender,
+  } = loan;
+
+  const { imageSource, year, model, make } = automobile;
+  const carTitle = `${year} ${toTitleCase(make)} ${toTitleCase(model)}`;
+
   return (
-    <Card variant="outlined">
-      <CardHeader title="Santander Consumer USA" subheader="$409/month" />
+    <Card variant="outlined" sx={{ height: "100%" }}>
+      <CardHeader
+        title={toTitleCase(lender)}
+        subheader={`${formatAmount(monthlyPayments)}/month`}
+      />
 
       <CardContent sx={{ paddingBottom: 0 }}>
         <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
           <ImageContainer>
             <img
-              src={CardImage}
+              src={imageSource}
               alt="A 2019 Toyota Camry drives along a scenic road, with lush vineyards visible in the background"
             />
           </ImageContainer>
 
           <Box width="100%">
-            <Typography variant="subtitle1">2017 Toyota Prius II</Typography>
-            <Typography variant="caption">Estimated 65,000 mil</Typography>
+            <Typography variant="subtitle1">{carTitle}</Typography>
+            <Typography variant="caption">
+              Estimated {formatAmount(originalAmount)} mil
+            </Typography>
           </Box>
 
           <IconButton aria-label="open menu" sx={{ mt: -1 }}>
@@ -41,10 +59,10 @@ export default function LoanCard() {
 
         <Divider sx={{ my: 1.5 }} />
 
-        <InfoItem title="APR" value="2.49%" size="small" />
+        <InfoItem title="APR" value={`${apr}%`} size="small" />
         <InfoItem
           title="Time remaining"
-          value="85 mon"
+          value={`${remainingMonths} mon`}
           size="small"
           sx={{ mt: 1 }}
         />
