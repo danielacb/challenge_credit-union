@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 
 import { theme } from "./theme";
 import LoanRequest from "./pages/LoanRequest";
+import Confirmation from "./pages/Confirmation";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<LoanRequest />} />
+          <Route path="/confirmation" element={<Confirmation />} />
         </Routes>
       </Router>
     </ThemeProvider>

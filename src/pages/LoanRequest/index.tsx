@@ -2,7 +2,6 @@ import {
   Button,
   Divider,
   FormControl,
-  Grid2,
   InputLabel,
   MenuItem,
   Select,
@@ -13,6 +12,7 @@ import { NumericFormat } from "react-number-format";
 
 import { loanPurposeOptions, loanTermOptions } from "./options";
 import { Form, FormFooter, Wrapper } from "./styles";
+import InfoItem from "../../components/InfoItem";
 
 export default function LoanRequest() {
   return (
@@ -67,7 +67,7 @@ export default function LoanRequest() {
           </Select>
         </FormControl>
 
-        <Typography variant="body2">
+        <Typography variant="body2" sx={{ marginBottom: 2.5 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sagittis
           dictum dignissim. In hac habitasse platea dictumst. Duis at efficitur
           dolor. Nulla id venenatis lectus, vitae laoreet magna. Etiam tincidunt
@@ -76,32 +76,12 @@ export default function LoanRequest() {
           auam. lobortis blandit iosum varius at.
         </Typography>
 
-        <Grid2 container sx={{ marginTop: 2.5 }}>
-          <Grid2 size={6}>
-            <Typography variant="body1">Monthly payment</Typography>
-          </Grid2>
-          <Grid2 size={6} sx={{ textAlign: "right" }}>
-            <Typography variant="body1" sx={{ fontWeight: 700 }}>
-              $85
-            </Typography>
-          </Grid2>
-        </Grid2>
-
+        <InfoItem title="Monthly payment" value="$85" sx={{ marginTop: 2.5 }} />
         <Divider sx={{ marginY: 1 }} />
-
-        <Grid2 container>
-          <Grid2 size={6}>
-            <Typography variant="body1">APR</Typography>
-          </Grid2>
-          <Grid2 size={6} sx={{ textAlign: "right" }}>
-            <Typography variant="body1" sx={{ fontWeight: 700 }}>
-              2.49%
-            </Typography>
-          </Grid2>
-        </Grid2>
+        <InfoItem title="APR" value="2.49%" />
 
         <FormFooter>
-          <Button fullWidth type="submit" variant="contained">
+          <Button fullWidth type="submit" variant="contained" size="large">
             Submit application
           </Button>
         </FormFooter>
