@@ -26,7 +26,7 @@ export default function Confirmation() {
     setIsLoading(true);
     async function getLoans() {
       try {
-        const loans = (await getLoansByUser(userId)) || [];
+        const loans = await getLoansByUser(userId);
         setLoans(loans.loansAvailable);
       } catch (error) {
         setAPIError("Unable to retrieve loans. Please try again shortly!");

@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 import ArrowDown from "../components/Icons/ArrowDown";
 
-export const theme = createTheme({
+export const theme: ThemeOptions = createTheme({
   typography: (palette) => ({
     fontFamily: '"Albert Sans", sans-serif',
     h1: {
