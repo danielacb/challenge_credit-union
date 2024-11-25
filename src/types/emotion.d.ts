@@ -1,6 +1,6 @@
 import "@emotion/react";
-import { Theme as MUITheme } from "@mui/material";
-
+import { Theme as LibTheme } from "@mui/material";
 declare module "@emotion/react" {
-  export type Theme = MUITheme;
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  export interface Theme extends LibTheme {}
 }

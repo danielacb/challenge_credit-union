@@ -9,8 +9,9 @@ const config: Config = {
   moduleNameMapper: {
     "\\.(css|scss)$": "identity-obj-proxy",
     "^@mui/(.*)$": "<rootDir>/node_modules/@mui/$1",
+    "\\.(svg)$": "<rootDir>/__mocks__/jest.mock.ts",
   },
-  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
+  setupFilesAfterEnv: ["<rootDir>/setupTests.ts", "@emotion/jest"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "d.ts"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/"],
   moduleDirectories: ["node_modules", "src"],
@@ -22,6 +23,7 @@ const config: Config = {
     "!src/utils/tests.tsx",
     "!<rootDir>/node_modules/",
     "!<rootDir>/src/**/styles.ts",
+    "!<rootDir>/src/components/Icons/*",
   ],
 };
 

@@ -8,7 +8,9 @@
     "target": "ES2022",
     "lib": ["ES2023", "DOM"],
     "types": ["node", "jest", "@testing-library/jest-dom"],
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "esModuleInterop": true
   },
   "include": ["src", "types"]
 }

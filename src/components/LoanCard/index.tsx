@@ -33,16 +33,13 @@ export default function LoanCard({ loan }: { loan: LoanProps }) {
     <Card variant="outlined" sx={{ height: "100%" }}>
       <CardHeader
         title={toTitleCase(lender)}
-        subheader={`${formatAmount(monthlyPayments)}/month`}
+        subheader={`$${formatAmount(monthlyPayments)}/month`}
       />
 
       <CardContent sx={{ paddingBottom: 0 }}>
         <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
           <ImageContainer>
-            <img
-              src={imageSource}
-              alt="A 2019 Toyota Camry drives along a scenic road, with lush vineyards visible in the background"
-            />
+            <img src={imageSource} alt={carTitle} />
           </ImageContainer>
 
           <Box width="100%">
