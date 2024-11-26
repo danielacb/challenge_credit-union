@@ -17,20 +17,14 @@ import { LoanProps } from "../../api";
 import { formatAmount, toTitleCase } from "../../utils";
 
 export default function LoanCard({ loan }: { loan: LoanProps }) {
-  const {
-    automobile,
-    apr,
-    monthlyPayments,
-    remainingMonths,
-    originalAmount,
-    lender,
-  } = loan;
+  const { automobile, apr, monthlyPayments, remainingMonths, balance, lender } =
+    loan;
 
   const { imageSource, year, model, make } = automobile;
   const carTitle = `${year} ${toTitleCase(make)} ${toTitleCase(model)}`;
 
   return (
-    <Card variant="outlined" sx={{ height: "100%" }}>
+    <Card variant="outlined" sx={{ height: "100%" }} data-testid="loan-card">
       <CardHeader
         title={toTitleCase(lender)}
         subheader={`$${formatAmount(monthlyPayments)}/month`}
@@ -45,7 +39,7 @@ export default function LoanCard({ loan }: { loan: LoanProps }) {
           <Box width="100%">
             <Typography variant="subtitle1">{carTitle}</Typography>
             <Typography variant="caption">
-              Estimated {formatAmount(originalAmount)} mil
+              Estimated {formatAmount(balance)} mil
             </Typography>
           </Box>
 

@@ -28,9 +28,9 @@ export default function Confirmation() {
       try {
         const loans = await getLoansByUser(userId);
         setLoans(loans.loansAvailable);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setAPIError("Unable to retrieve loans. Please try again shortly!");
-        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -93,7 +93,7 @@ export default function Confirmation() {
             <Box sx={{ width: "100%", textAlign: "center", my: 4 }}>
               <CircularProgress />
             </Box>
-          ) : loans ? (
+          ) : loans.length ? (
             <Grid2 container spacing={2}>
               {loans?.map((loan) => (
                 <Grid2 key={loan.id} size={{ xs: 12, sm: 6 }}>
@@ -101,7 +101,9 @@ export default function Confirmation() {
                 </Grid2>
               ))}
             </Grid2>
-          ) : null}
+          ) : (
+            <Typography>No loans found</Typography>
+          )}
         </div>
       </Content>
     </>

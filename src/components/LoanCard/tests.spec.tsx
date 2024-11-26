@@ -59,7 +59,7 @@ describe("<LoanCard />", () => {
     expect(screen.getByText("66 mon")).toBeInTheDocument();
 
     // Check for the original amount
-    expect(screen.getByText("Estimated 6,850 mil")).toBeInTheDocument();
+    expect(screen.getByText("Estimated 6,509 mil")).toBeInTheDocument();
   });
 
   it("should render the car image with correct src and alt attributes", () => {

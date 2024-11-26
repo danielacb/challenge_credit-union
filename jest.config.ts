@@ -9,7 +9,8 @@ const config: Config = {
   moduleNameMapper: {
     "\\.(css|scss)$": "identity-obj-proxy",
     "^@mui/(.*)$": "<rootDir>/node_modules/@mui/$1",
-    "\\.(svg)$": "<rootDir>/__mocks__/jest.mock.ts",
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.ts",
   },
   setupFilesAfterEnv: ["<rootDir>/setupTests.ts", "@emotion/jest"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "d.ts"],
@@ -19,11 +20,13 @@ const config: Config = {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.{ts,tsx,js,jsx}",
-    "!src/types/**/*.d.ts",
+    "!src/**/*.d.ts",
     "!src/utils/tests.tsx",
-    "!<rootDir>/node_modules/",
-    "!<rootDir>/src/**/styles.ts",
-    "!<rootDir>/src/components/Icons/*",
+    "!src/**/styles.ts",
+    "!src/components/Icons/**/*",
+    "!src/main.tsx",
+    "!vite-env.d.ts",
+    "!node_modules/**/*",
   ],
 };
 

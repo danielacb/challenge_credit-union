@@ -84,7 +84,7 @@ export default function LoanRequestForm({
           error={!!errors.loanTerm}
           {...register("loanTerm", {
             setValueAs: (value) =>
-              [12, 24, 36, 28].includes(value) ? value : undefined,
+              [12, 24, 36, 48].includes(value) ? value : undefined,
           })}
         >
           <MenuItem disabled value="">

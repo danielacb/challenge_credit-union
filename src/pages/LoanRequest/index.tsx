@@ -74,9 +74,9 @@ export default function LoanRequest() {
         });
 
         setOffer(offer);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setAPIError("Unable to retrieve offers. Please try again shortly!");
-        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -99,9 +99,9 @@ export default function LoanRequest() {
       });
 
       navigate("/confirmation", { state: { userId } });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setAPIError("Unable to submit application. Please try again shortly!");
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -138,7 +138,7 @@ export default function LoanRequest() {
           <Box sx={{ width: "100%", textAlign: "center", my: 4 }}>
             <CircularProgress />
           </Box>
-        ) : offer ? (
+        ) : offer?.id ? (
           <>
             <InfoItem
               title="Monthly payment"
@@ -148,7 +148,9 @@ export default function LoanRequest() {
             <Divider sx={{ marginY: 1 }} />
             <InfoItem title="APR" value={formatPercentage(offer.apr)} />
           </>
-        ) : null}
+        ) : (
+          <Typography>Unable to find an offer</Typography>
+        )}
 
         <FormFooter>
           <Button
