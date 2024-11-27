@@ -62,6 +62,7 @@ export default function LoanRequest() {
   const formValues = watch();
   const { loanPurpose, amount, loanTerm } = formValues;
 
+  // After the user finishes filling out or updating the form, send the request for the offer
   useEffect(() => {
     async function fetchOffers() {
       setIsLoading(true);
@@ -85,6 +86,7 @@ export default function LoanRequest() {
     if (isValid) fetchOffers();
   }, [isValid, loanPurpose, amount, loanTerm]);
 
+  // When the button is clicked, submit the application and redirect the user to the confirmation page.
   async function onSubmit() {
     setIsLoading(true);
 
@@ -148,9 +150,7 @@ export default function LoanRequest() {
             <Divider sx={{ marginY: 1 }} />
             <InfoItem title="APR" value={formatPercentage(offer.apr)} />
           </>
-        ) : (
-          <Typography>Unable to find an offer</Typography>
-        )}
+        ) : null}
 
         <FormFooter>
           <Button

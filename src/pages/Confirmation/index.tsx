@@ -40,6 +40,7 @@ export default function Confirmation() {
   }, [userId]);
 
   if (!userId) {
+    // Display this message if the user accesses this page without filling out the loan request form.
     return (
       <>
         <PageHeader>

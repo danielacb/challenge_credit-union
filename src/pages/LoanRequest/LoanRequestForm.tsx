@@ -35,6 +35,7 @@ export default function LoanRequestForm({
       <FormControl fullWidth error={!!errors.loanPurpose}>
         <InputLabel id="loan-purpose">Loan Purpose</InputLabel>
         <Select
+          data-testid="select-loan-purpose"
           defaultValue=""
           labelId="loan-purpose"
           id="loan-purpose"
@@ -55,6 +56,7 @@ export default function LoanRequestForm({
       </FormControl>
 
       <NumericFormat
+        data-testid="loan-amount"
         customInput={TextField}
         fullWidth
         id="outlined-basic"
@@ -77,6 +79,7 @@ export default function LoanRequestForm({
       <FormControl fullWidth error={!!errors.loanTerm}>
         <InputLabel id="loan-terms">{`Loan term (months)`}</InputLabel>
         <Select
+          data-testid="select-loan-terms"
           defaultValue=""
           labelId="loan-terms"
           id="loan-terms"
