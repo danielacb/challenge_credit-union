@@ -19,6 +19,7 @@ export default function Confirmation() {
   const [loans, setLoans] = useState<LoanProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setAPIError] = useState("");
+  // retrieve userId from react router navigation
   const location = useLocation();
   const userId = location.state?.userId;
 

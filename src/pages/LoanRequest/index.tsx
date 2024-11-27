@@ -100,6 +100,7 @@ export default function LoanRequest() {
         amount,
       });
 
+      // Pass userId as route data to be used on the confirmation page
       navigate("/confirmation", { state: { userId } });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
