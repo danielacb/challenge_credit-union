@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+# Clutch Loan Application Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📋 Project Overview
 
-Currently, two official plugins are available:
+This project is a technical challenge for an opening at Clutch. It simulates a simplified application flow for requesting a personal loan. The user fills out a loan request form, submits the application, and is then redirected to a confirmation page that displays up-sell opportunities for refinancing a car.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tools & Technologies
 
-## Expanding the ESLint configuration
+I chose these technologies as they align with my expertise and allowed me to efficiently replicate the UI from the provided Figma design. Here's what was used:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Vite: For a fast and modern development experience.
+- React.js & TypeScript: To build scalable, type-safe, and maintainable components.
+- MUI & Emotion: To closely match the provided UI design.
+- React Router: For client-side navigation and to persist the `userId` between pages.
+- React Hook Form & Zod: For form handling and schema validation.
+- Jest & React Testing Library: For unit tests to ensure reliable component behavior.
+- Cypress: For end-to-end testing to simulate real user interactions.
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 How to Run the Project
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+_Note: Developed using Node.js v20.17.0. It's recommended to use this version to avoid potential compatibility issues._
+
+1. Install dependencies:
+
+```
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Start the development server:
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
 ```
+npm run dev
+```
+
+The app will run on `http://localhost:5173`
+
+## 🧪 Available Commands
+
+- Run unit tests
+
+```
+npm run test
+```
+
+- Open Cypress for E2E tests:
+
+```
+npm run cy:open
+```
+
+or
+
+```
+npm run cy:run
+```
+
+## 📬 Contact
+
+Feel free to reach out if you have any questions or feedback about this project:
+Daniela Barbosa
+<br />
+contato@danielacb.com
+<br />
+https://github.com/danielacb
+<br />
+https://www.linkedin.com/in/cbdaniela/
