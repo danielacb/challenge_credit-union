@@ -4,6 +4,11 @@
 
 This project is a technical challenge for an opening at Clutch. It simulates a simplified application flow for requesting a personal loan. The user fills out a loan request form, submits the application, and is then redirected to a confirmation page that displays up-sell opportunities for refinancing a car.
 
+![image](https://github.com/user-attachments/assets/2796fd1e-8820-4933-8f62-19b8e461cf90)
+
+Figma [file](https://www.figma.com/design/1DEVLffgwPJ7lua59WaxwB/Frontend-Challenge?node-id=1-5&p=f)
+
+
 ## 🛠️ Tools & Technologies
 
 I chose these technologies as they align with my expertise and allowed me to efficiently replicate the UI from the provided Figma design. Here's what was used:
